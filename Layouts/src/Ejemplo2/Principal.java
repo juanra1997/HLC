@@ -3,35 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejemplo1a;
+package Ejemplo2;
 
-import static java.awt.EventQueue.invokeLater;
 import javax.swing.JFrame;
 
 /**
  *
  * @author Juanra
  */
-public class Principal1a {
-    
-    public static void mostrar() {
+public class Principal {
+ 
+    public static void iniciaComponentes(){
         
-        Ventana1a miVentana=new Ventana1a();
+        Ventana miVentana=new Ventana();
+        //miVentana.setLocationRelativeTo(null);
+        miVentana.setSize(800, 400);
         miVentana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        miVentana.setTitle("Ejemplo varios paneles");
         miVentana.setVisible(true);
         miVentana.setResizable(false);
-        miVentana.setLocationRelativeTo(null);
     }
     
     public static void main(String[] args){
         
-        invokeLater(new Runnable(){
-            @Override
-            public void run(){
-                mostrar();
-            }
-        });
-        //mostrar();
+        iniciaComponentes();
+        //setLocationRelativeTo(null);
     }
 }

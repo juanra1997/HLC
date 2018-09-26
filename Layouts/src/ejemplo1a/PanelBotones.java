@@ -53,6 +53,10 @@ public class PanelBotones extends JPanel {
         System.exit(0);
     }
 
+    public JButton getBtnSaludo() {
+        return btnSaludo;
+    }
+
     public JButton getBtnSalir() {
         return btnSalir;
     }
