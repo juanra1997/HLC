@@ -41,6 +41,10 @@ public class PanelInferior extends JPanel {
         btnSalir.addActionListener(e->salir());
         
     }
+
+    public JLabel getSolucionTxt() {
+        return solucionTxt;
+    }
     
     public void salir(){
         System.exit(0);

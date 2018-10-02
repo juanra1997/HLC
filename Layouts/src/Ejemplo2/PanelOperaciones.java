@@ -5,6 +5,7 @@
  */
 package Ejemplo2;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,15 +24,23 @@ public class PanelOperaciones extends JPanel {
     public void iniciaComponentes(){
         
         setLayout(new FlowLayout(FlowLayout.CENTER));
-        p.setSize(20, 20);
+        p.setPreferredSize(new Dimension(100,100));
         add(p);
         add(sum);
-        u.setSize(20, 20);
+        u.setPreferredSize(new Dimension(100,100));
         add(u);
     }
     
     public PanelOperaciones(){
         
         iniciaComponentes();
+    }
+
+    public JTextField getP() {
+        return p;
+    }
+
+    public JTextField getU() {
+        return u;
     }
 }

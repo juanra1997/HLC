@@ -5,6 +5,7 @@
  */
 package Ejemplo2;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -20,8 +21,12 @@ public class PanelReset extends JPanel{
     public void iniciaComponentes(){
         
         setLayout(new FlowLayout(FlowLayout.CENTER));
-        btn.setSize(100, 100);
+        btn.setPreferredSize(new Dimension(120,200));
         add(btn);
+    }
+
+    public JButton getBtn() {
+        return btn;
     }
     
     public PanelReset(){
