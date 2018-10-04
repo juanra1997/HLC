@@ -1,6 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package practica;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -21,13 +26,13 @@ import javax.swing.JTextField;
  *
  * @author Juanra
  */
-public class PanelDerecho extends JPanel {
+public class PanelIzquierdo extends JPanel {
     
-    JLabel monedaDestino;
+    JLabel monedaOrigen;
     JLabel titulo;
     JTextField cantidad;
     
-    public PanelDerecho(){
+    public PanelIzquierdo(){
         
         iniciaComponentes();
     }
@@ -36,15 +41,15 @@ public class PanelDerecho extends JPanel {
         
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
-        titulo=new JLabel("Moneda Destino");
+        titulo=new JLabel("Moneda Origen");
         titulo.setFont(new Font("Arial", Font.BOLD, 20));
         titulo.setAlignmentX(CENTER_ALIGNMENT);
         add(titulo);
         
-        monedaDestino=new JLabel("$");
-        monedaDestino.setFont(new Font("Arial", Font.BOLD, 200));
-        monedaDestino.setAlignmentX(CENTER_ALIGNMENT);
-        add(monedaDestino);
+        monedaOrigen=new JLabel("€");
+        monedaOrigen.setFont(new Font("Arial", Font.BOLD, 200));
+        monedaOrigen.setAlignmentX(CENTER_ALIGNMENT);
+        add(monedaOrigen);
            
         cantidad=new JTextField();
         cantidad.setEditable(false);
@@ -67,5 +72,4 @@ public class PanelDerecho extends JPanel {
     public void setCantidad(JTextField cantidad) {
         this.cantidad = cantidad;
     }
-    
 }
