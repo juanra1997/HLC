@@ -15,9 +15,9 @@ import javax.swing.JFrame;
  */
 public class Ventana extends JFrame {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 	
-	Panel p=new Panel();
+    Panel p=new Panel();
     PanelTexto pt=new PanelTexto();
     PanelBotones pb=new PanelBotones();
     
