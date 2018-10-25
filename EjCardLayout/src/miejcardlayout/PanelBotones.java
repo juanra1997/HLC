@@ -19,45 +19,76 @@ import javax.swing.JPanel;
  */
 public class PanelBotones extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-	
-	JButton primero, previo, siguiente, ultimo;
-    
-    public PanelBotones(){
-        
+    private static final long serialVersionUID = 1L;
+
+    JButton primero, previo, siguiente, ultimo;
+
+    public PanelBotones() {
+
         iniciaComponentes();
     }
-    
-    public void iniciaComponentes(){
-        
+
+    public void iniciaComponentes() {
+
         setLayout(new FlowLayout(FlowLayout.CENTER));
-        
+
         setPreferredSize(new Dimension(1000, 1000));
-        
+
         //add(Box.createGlue());
-        
-        primero=new JButton("Primero");
+        primero = new JButton("Primero");
         primero.setSize(200, 100);
         //primero.setAlignmentX(CENTER_ALIGNMENT);
         add(primero);
-        
-        previo=new JButton("Previo");
+
+        previo = new JButton("Previo");
         previo.setSize(200, 100);
         //previo.setAlignmentX(CENTER_ALIGNMENT);
         add(previo);
-        
-        siguiente=new JButton("Siguiente");
+
+        siguiente = new JButton("Siguiente");
         siguiente.setSize(200, 100);
         //siguiente.setAlignmentX(CENTER_ALIGNMENT);
         add(siguiente);
-        
-        ultimo=new JButton("Ultimo");
+
+        ultimo = new JButton("Ultimo");
         ultimo.setSize(200, 100);
         //ultimo.setAlignmentX(CENTER_ALIGNMENT);
         add(ultimo);
-        
+
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        
+
         //add(Box.createGlue());
+    }
+
+    public JButton getPrimero() {
+        return primero;
+    }
+
+    public void setPrimero(JButton primero) {
+        this.primero = primero;
+    }
+
+    public JButton getPrevio() {
+        return previo;
+    }
+
+    public void setPrevio(JButton previo) {
+        this.previo = previo;
+    }
+
+    public JButton getSiguiente() {
+        return siguiente;
+    }
+
+    public void setSiguiente(JButton siguiente) {
+        this.siguiente = siguiente;
+    }
+
+    public JButton getUltimo() {
+        return ultimo;
+    }
+
+    public void setUltimo(JButton ultimo) {
+        this.ultimo = ultimo;
     }
 }
