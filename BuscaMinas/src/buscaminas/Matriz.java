@@ -11,7 +11,7 @@ package buscaminas;
  */
 public class Matriz {
     
-    static int[][] minas=new int[4][5];
+    static int[][] minas=new int[8][8];
     
     public static void main(String[] args){
         
@@ -26,6 +26,8 @@ public class Matriz {
         System.out.println(prueba);
         cont++;*/
     //}
+        Ventana obj=new Ventana();
+        obj.setVisible(true);
     }
 
     public static void rellenarMatriz(){
