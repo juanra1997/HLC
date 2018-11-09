@@ -5,6 +5,7 @@
  */
 package juego;
 
+import java.awt.Dimension;
 import javax.swing.JFrame;
 
 /**
@@ -15,7 +16,7 @@ public class Principal {
     
     public static void main(String[] args) {
 
-        Ventana v=new Ventana("Mini tenis");
+        Ventana v=new Ventana("Mini tenis", new Dimension(300, 400));
         v.setSize(300, 400);
         v.setResizable(false);
         v.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

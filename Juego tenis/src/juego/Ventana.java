@@ -5,6 +5,7 @@
  */
 package juego;
 
+import java.awt.Dimension;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,16 +17,18 @@ import javax.swing.JFrame;
  */
 public class Ventana extends JFrame implements Runnable{
     
-    Juego j=new Juego();
+    Dimension dim;
+    Juego j;//=new Juego();
     
-    public Ventana(String s){
+    public Ventana(String s, Dimension d){
         
         super(s);
+        dim=d;
         iniciaComponentes();
     }
     
     public void iniciaComponentes(){
-        
+        j=new Juego(dim);
         add(j);
         mover();
     }
