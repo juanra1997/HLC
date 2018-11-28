@@ -7,6 +7,7 @@ package juegob;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 /**
@@ -15,7 +16,7 @@ import java.awt.event.KeyEvent;
  */
 public class Raqueta {
     
-    int x=115, y=330, dx=0;
+    int x=115, y=330, dx=0, w=60, h=15;
     Juego miJuego;
     
     public Raqueta(Juego m){
@@ -33,19 +34,23 @@ public class Raqueta {
     public void pintarRaqueta(Graphics2D g2d){
         
         g2d.setColor(Color.BLACK);
-        g2d.fill3DRect(x, y, 60, 15, true);
+        g2d.fill3DRect(x, y, w, h, true);
     }
     
     public void keyPressed(KeyEvent e){
         
         if(e.getKeyCode()==KeyEvent.VK_LEFT){
-            dx=-1;
+            dx=-5;
         }
         if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-            dx=1;
+            dx=5;
         }
     }
      public void keyReleased(KeyEvent e){
          dx=0;
+     }
+     //--------------------------------------------------------
+     public Rectangle devolverRaqueta(){
+         return new Rectangle(x, y, w, h);
      }
 }

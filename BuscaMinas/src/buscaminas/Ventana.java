@@ -33,6 +33,8 @@ public class Ventana extends JFrame{
     
     miPanel panel;
     miPanelLateral lateral;
+    /*Matriz prueba=new Matriz();
+    int[][] minas=new int[8][8];*/
     
     public Ventana(){
         
@@ -70,7 +72,7 @@ public class Ventana extends JFrame{
     }
 }
 
-class miPanel extends JPanel {
+/*class miPanel extends JPanel {
     
     GridLayout gl=new GridLayout(8, 8);
     JButton[][] botones=new JButton[8][8];
@@ -92,10 +94,10 @@ class miPanel extends JPanel {
         
         //----------------------------------------------------------------------
         //Descomentar esto
-        for(int i=0; i<botones.length; i++){
+        /*for(int i=0; i<botones.length; i++){
             for(int j=0; j<botones[i].length; j++){
                 //System.out.println(i+","+j);
-                botones[i][j]= new JButton("M");
+                botones[i][j]= new JButton("");
                 botones[i][j].setBackground(Color.CYAN);
             }
         }
@@ -110,7 +112,7 @@ class miPanel extends JPanel {
         //----------------------------------------------------------------------
     }
 
-}
+}*/
 
 class miPanelLateral extends JPanel {
     
@@ -128,8 +130,8 @@ class miPanelLateral extends JPanel {
         
         super.paintComponent(g);
             
-        File fichero=new File("C:\\Users\\Juanra\\Desktop\\sintitulo.png");
-        File fichero2=new File("C:\\Users\\Juanra\\Desktop\\34116.png");
+        File fichero=new File("sintitulo.png");
+        File fichero2=new File("34116.png");
         
         try {
             Image miImagen=ImageIO.read(fichero);

@@ -3,12 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package buscaminas;
+package miminitenis;
+
+import java.awt.Canvas;
 
 /**
  *
  * @author Juanra
  */
-public class IconoBandera {
+public class PanelJuego extends Canvas{
+    
+    public PanelJuego(){
+        
+    }
     
 }

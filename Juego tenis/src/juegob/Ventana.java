@@ -17,6 +17,10 @@ import javax.swing.JFrame;
 public class Ventana extends JFrame implements Runnable{
     
     Juego j=new Juego();
+    static boolean fin=false;
+    int velocidad=12, velocidadActual;
+    long tiempoJuego=System.currentTimeMillis();
+    long tiempo;
     
     public Ventana(String s){
         
@@ -38,14 +42,21 @@ public class Ventana extends JFrame implements Runnable{
     @Override
     public void run() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        while(true){
+        velocidadActual=velocidad;
+        while(!fin){
+            if(tiempo==20&&velocidadActual>1){
+                velocidadActual=velocidadActual-1;
+                tiempoJuego=System.currentTimeMillis();
+            }
             j.mover();
             j.repaint();
             try {
-                sleep(10);
+                sleep(velocidadActual);
             } catch (InterruptedException ex) {
                 //Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
+            tiempo=(int)((System.currentTimeMillis()-tiempoJuego)/1000);
+            //System.out.println(velocidadActual);
         }
     }
 }

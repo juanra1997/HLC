@@ -5,19 +5,30 @@
  */
 package buscaminas;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Juanra
  */
-public class Matriz {
+public class Matriz /*implements ActionListener*/{
     
-    static int[][] minas=new int[8][8];
+    int[][] minas=new int[8][8];
+    //miPanel prueba=new miPanel();
+    JButton[][] botones;//=new JButton[8][8];
+    Ventana obj=new Ventana();
     
-    public static void main(String[] args){
+    /*public static void main(String[] args){
+        
+       
         
         rellenarMatriz();
         ponerMinas();
         pintarMatriz();
+        //pintarMinas();
                 
                 
                 /*int cont=0;
@@ -26,11 +37,11 @@ public class Matriz {
         System.out.println(prueba);
         cont++;*/
     //}
-        Ventana obj=new Ventana();
+        /*Ventana obj=new Ventana();
         obj.setVisible(true);
-    }
+    }*/
 
-    public static void rellenarMatriz(){
+    public void rellenarMatriz(){
         
         for(int i=0; i<minas.length; i++){
             for(int j=0; j<minas[i].length; j++){
@@ -39,7 +50,7 @@ public class Matriz {
         }
     }
     
-    public static void ponerMinas(){
+    public void ponerMinas(){
         
         int cont=0;
         while(cont<5){
@@ -56,11 +67,11 @@ public class Matriz {
         }
     }
     
-    public static void completarMatriz(){
+    public void completarMatriz(){
         
     }
     
-    public static void pintarMatriz(){
+    public void pintarMatriz(){
         
         for(int i=0; i<minas.length; i++){
             for(int j=0; j<minas[i].length; j++){
@@ -69,6 +80,61 @@ public class Matriz {
             System.out.println();
         }
     }
+    
+    public void pintarMinas(){
+           
+         botones=obj.panel.botones;
+        for(int i=0; i<minas.length; i++){
+            for(int j=0; j<minas[i].length; j++){
+                
+                if(minas[i][j]==9){
+                    botones[i][j].setText("M");
+                    //botones[i][j].addActionListener(new MyListener(i, j));
+                    //System.out.println("En "+i+", "+j+" hay mina");
+                }else{
+                    botones[i][j].setText("");
+                }
+            }
+            //System.out.println();
+        }
+        
+        //---------------------------------------------------------
+        /*for(int i=0; i<minas.length; i++){
+            for(int j=0; j<minas[i].length; j++){
+                 //System.out.println("En "+i+", "+j+" hay mina");
+                botones[i][j].addActionListener(new ActionListener(){
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    System.out.println("Hola");
+                    }
+                });
+            }
+        }*/
+    }
+}
+class MyListener implements ActionListener{
+
+
+    int myi, myj;
+    int[][] prueba;
+    
+    public MyListener(/*int[][] m, */int i, int j){
+       
+        myi=i;
+        myj=j;
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+       if(prueba[myi][myj]==9){
+           JOptionPane.showMessageDialog(null, myi+", "+myj);
+       }
+    }
+
+    
 }
 
 //matriz de 4 filas y 5 columnas

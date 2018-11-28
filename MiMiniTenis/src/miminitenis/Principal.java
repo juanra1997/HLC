@@ -3,18 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package buscaminas;
-
-import javax.swing.JPanel;
+package miminitenis;
 
 /**
  *
  * @author Juanra
  */
-public class PanelCentral extends JPanel{
+public class Principal {
     
-    public PanelCentral(){
+    
+    public static void main(String[] args){
         
-        
+        Ventana obj=new Ventana();
+        obj.setLocationRelativeTo(null);
+        obj.setVisible(true);
+        (new Thread(obj)).start();
     }
 }

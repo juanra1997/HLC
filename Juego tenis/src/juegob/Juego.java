@@ -15,12 +15,12 @@ import java.awt.event.KeyListener;
  *
  * @author Juanra
  */
-public class Juego extends Canvas implements KeyListener{
+public class Juego extends Canvas/* implements KeyListener*/{
     
     Bola miBola=new Bola(this/*, this.getWidth()-30, this.getHeight()-30*/);
     Raqueta raqueta=new Raqueta(this);
     
-    /*public Juego(){
+    public Juego(){
         
         this.addKeyListener(new KeyListener(){
 
@@ -42,7 +42,7 @@ public class Juego extends Canvas implements KeyListener{
             }
         
         });
-    }*/
+    }
     public void mover(){
         
         raqueta.moverRaqueta();
@@ -68,7 +68,7 @@ public class Juego extends Canvas implements KeyListener{
         return miBola;
     }
 
-    @Override
+    /*@Override
     public void keyTyped(KeyEvent e) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -83,5 +83,5 @@ public class Juego extends Canvas implements KeyListener{
     public void keyReleased(KeyEvent e) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         raqueta.keyReleased(e);
-    }
+    }*/
 }

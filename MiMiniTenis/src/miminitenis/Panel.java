@@ -3,12 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package buscaminas;
+package miminitenis;
+
+import java.awt.Color;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Juanra
  */
-public class IconoReloj {
+public class Panel extends JPanel{
     
+    public Panel(){
+        setBackground(Color.CYAN);
+    }
 }
