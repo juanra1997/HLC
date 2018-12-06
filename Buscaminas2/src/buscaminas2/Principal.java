@@ -71,6 +71,7 @@ public class Principal implements MouseListener {
         //Ventana obj;
         //obj=matriz.obj;
         obj = new Ventana(matriz.minas);
+        obj.setResizable(false);
         obj.setVisible(true);
     }
 
