@@ -33,11 +33,12 @@ public class Ventana extends JFrame {
 
     miPanel panel;
     miPanelLateral lateral;
-    /*Matriz prueba=new Matriz();
-    int[][] minas=new int[8][8];*/
+    //Matriz prueba=new Matriz();
+    int[][] minas;//=new int[8][8];
 
-    public Ventana() {
+    public Ventana(int[][] minass) {
 
+        minas = minass;
         iniciaComponentes();
     }
 
@@ -50,7 +51,7 @@ public class Ventana extends JFrame {
          }*/
         //----------------------------------------------------------------------
         //Descomentar esto
-        panel = new miPanel();
+        panel = new miPanel(minas);
         panel.setBorder(BorderFactory.createCompoundBorder());
         add(panel, BorderLayout.CENTER);
         //add(new JButton(), BorderLayout.NORTH);
@@ -70,15 +71,17 @@ public class Ventana extends JFrame {
     }
 }
 
-class miPanel extends JPanel {
+class miPanel extends JPanel implements ActionListener {
 
+    int casillas = 0;
     GridLayout gl = new GridLayout(8, 8);
     JButton[][] botones = new JButton[8][8];
-    Matriz prueba=new Matriz();
-    int[][] minas=prueba.minas;
+    // Matriz prueba=new Matriz();
+    int[][] minas;//=prueba.minas;
 
-    public miPanel() {
+    public miPanel(int[][] minass) {
 
+        minas = minass;
         iniciaComponentes();
     }
 
@@ -88,6 +91,7 @@ class miPanel extends JPanel {
         setBackground(Color.WHITE);
         gl.setHgap(5);
         gl.setVgap(5);
+        
         //JOptionPane.showMessageDialog(null, "hola");
         /*for(int i=0; i<64; i++){
          add(new JButton());
@@ -98,32 +102,30 @@ class miPanel extends JPanel {
         for (int i = 0; i < botones.length; i++) {
             for (int j = 0; j < botones[i].length; j++) {
                 //System.out.println(i+","+j);
-                /*botones[i][j]= new JButton("");
-                 botones[i][j].setBackground(Color.CYAN);
-                 //botones[i][j].
-                 botones[i][j].adda*/
-                //if(minas[i][j]==9){
-                    botones[i][j] = new JButton();
-                    String nombre = new Integer(i).toString();
-                    nombre += new Integer(j).toString();
-                    botones[i][j].setActionCommand(nombre);
+                botones[i][j] = new JButton("");
+                botones[i][j].setBackground(Color.CYAN);
+                //botones[i][j].
+                botones[i][j].addActionListener(this);
+                botones[i][j].setFocusable(false);
+                //System.out.println(minas[i][j]);
+                if (minas[i][j] == 9) {
+                    botones[i][j].setText("M");
+
+                    /*String nombre = new Integer(i).toString();
+                     nombre += new Integer(j).toString();*/
+                    //botones[i][j].setActionCommand(nombre);
                     add(botones[i][j]);
-               // }else{
-                    /*botones[i][j] = new JButton();
-                    String nombre = new Integer(i).toString();
-                    nombre += new Integer(j).toString();
-                    botones[i][j].setActionCommand(nombre);
-                    add(botones[i][j]);*/
-                //}
+                } else {
+                    //botones[i][j] = new JButton();
+                    //String nombre = new Integer(i).toString();
+                    //nombre += new Integer(j).toString();
+                    //botones[i][j].setActionCommand(nombre);
+                    add(botones[i][j]);
+                }
             }
         }
-        
-        
-        
-        
-        
-        addListeners();
 
+        //addListeners();
         for (int i = 0; i < botones.length; i++) {
             for (int j = 0; j < botones[i].length; j++) {
                 add(botones[i][j]);
@@ -135,21 +137,615 @@ class miPanel extends JPanel {
         //----------------------------------------------------------------------
     }
 
-    public void addListeners() {
-        for (int i = 0; i < botones.length; i++) {
-            for (int j = 0; j < botones[i].length; j++) {
-                botones[i][j].addActionListener(new ActionListener() {
+    /*public void addListeners() {
+     for (int i = 0; i < botones.length; i++) {
+     for (int j = 0; j < botones[i].length; j++) {
+     botones[i][j].addActionListener(new ActionListener() {
 
-                    public void actionPerformed(ActionEvent evt) {
-                        JButton evento = (JButton) evt.getSource();
-                        System.out.println("apretado el boton " + evento.getActionCommand());
+     public void actionPerformed(ActionEvent evt) {
+     JButton evento = (JButton) evt.getSource();
+     System.out.println("apretado el boton " + evento.getActionCommand());
                         
+     }
+     });
+     }
+     }
+     }*/
+    public void contar(int i, int j) {
+
+        //System.out.println(i+" "+j);
+        int sum = 0;
+        if (minas[i][j] == 9) {
+            JOptionPane.showMessageDialog(null, "Has perdido");
+            for (int x = 0; x < minas.length; x++) {
+                for (int y = 0; y < minas[i].length; y++) {
+                    if(minas[x][y]==9){
+                        botones[x][y].setText("B");
                     }
-                });
+                    botones[x][y].setEnabled(false);
+                    botones[x][y].setBackground(Color.WHITE);
+                }
             }
+
+        } else {
+            casillas++;
+            if(casillas==54){
+                JOptionPane.showMessageDialog(null, "Has ganado");
+                botones[i][j].setEnabled(false);
+                botones[i][j].setBackground(Color.WHITE);
+            }else{
+            //try {
+        /*for(int x=i; x<1; x++){
+            
+             }*/
+            if (i == 0) {
+
+                if (j == 7) {
+                    //System.out.println("Es este");
+                    for (int x = i; x < i + 2; x++) {
+                        for (int y = j - 1; y < j + 1; y++) {
+                            // if (botones[i][j].isEnabled()) {
+                            //System.out.println(x+" "+y);
+                            if (minas[x][y] == 9) {
+                                sum++;
+                            }
+//contar(x, y);
+                            //  }
+                        }
+                    }
+
+                    //  if (botones[i][j].isEnabled()) {
+                    botones[i][j].setText(String.valueOf(sum));
+                    botones[i][j].setBackground(Color.WHITE);
+                    botones[i][j].setEnabled(false);
+                    // }
+                } else if (j == 0) {
+                    //System.out.println("Es este");
+                    for (int x = i; x < i + 2; x++) {
+                        for (int y = j; y < j + 2; y++) {
+                            //if (botones[i][j].isEnabled()) {
+                            //System.out.println(x+" "+y);
+                            if (minas[x][y] == 9) {
+                                sum++;
+                            }
+                            //contar(x, y);
+                            //  }
+                        }
+                    }
+                    // if (botones[i][j].isEnabled()) {
+
+                    botones[i][j].setText(String.valueOf(sum));
+                    botones[i][j].setBackground(Color.WHITE);
+                    botones[i][j].setEnabled(false);
+                    //}
+                } else {
+                    //System.out.println("Es este");
+                    for (int x = i; x < i + 2; x++) {
+                        for (int y = j - 1; y < j + 2; y++) {
+                            //  if (botones[i][j].isEnabled()) {
+                            //System.out.println("i="+i+" j="+" "+j);
+                            if (minas[x][y] == 9) {
+                                sum++;
+                            }
+//                                contar(x, y);
+                        }
+                        //}
+                    }
+                    botones[i][j].setText(String.valueOf(sum));
+                    botones[i][j].setBackground(Color.WHITE);
+                    botones[i][j].setEnabled(false);
+                }
+                if (j != 0) {
+                    //try {
+
+                        if (botones[i][j].getText().equals("0")) {
+                            //System.out.println("Es este");
+                            botones[i][j].setText("");
+                            //System.out.println("Dentro");
+                            for (int x = i; x < i + 2; x++) {
+                                for (int y = j - 1; y < j + 1; y++) {
+                                    //System.out.println(x+" "+y);
+                                    if (botones[x][y].isEnabled()) {
+
+                                        contar(x, y);
+                                    }
+
+                                }
+                            }
+
+                        }
+                    //} catch (Exception e) {
+
+                    //}
+                } else {
+                    if (botones[i][j].getText().equals("0")) {
+                        //System.out.println("Es este");
+                        botones[i][j].setText("");
+                        //System.out.println("Dentro");
+                        for (int x = i; x < i + 2; x++) {
+                            for (int y = j; y < j + 2; y++) {
+                                if (botones[x][y].isEnabled()) {
+
+                                    contar(x, y);
+                                }
+
+                            }
+                        }
+
+                    }
+                }
+            } else if (j == 0) {
+                //System.out.println("Es este");
+                if (i == 7) {
+                    for (int x = i - 1; x < i + 1; x++) {
+                        for (int y = j; y < j + 2; y++) {
+                            //System.out.println(x + " " + y);
+                            //System.out.println(x + " " + y);
+                            //if (botones[i][j].isEnabled()) {
+
+                            if (minas[x][y] == 9) {
+                                sum++;
+
+                            }
+//contar(x, y);
+                            //}
+                        }
+                    }
+
+                    // if (botones[i][j].isEnabled()) {
+                    botones[i][j].setText(String.valueOf(sum));
+                    botones[i][j].setBackground(Color.WHITE);
+                    botones[i][j].setEnabled(false);
+                } else {
+                    for (int x = i - 1; x < i + 2; x++) {
+                        for (int y = j; y < j + 2; y++) {
+                            //System.out.println(x+" "+y);
+                            //System.out.println(x + " " + y);
+                            //if (botones[i][j].isEnabled()) {
+
+                            if (minas[x][y] == 9) {
+                                sum++;
+
+                            }
+//contar(x, y);
+                            //}
+                        }
+                    }
+
+                    // if (botones[i][j].isEnabled()) {
+                    botones[i][j].setText(String.valueOf(sum));
+                    botones[i][j].setBackground(Color.WHITE);
+                    botones[i][j].setEnabled(false);
+                }
+                //try {
+                if(i!=7){
+                    if (botones[i][j].getText().equals("0")) {
+                        //System.out.println("Es este");
+                        botones[i][j].setText("");
+                        //System.out.println("Dentro");
+                        for (int x = i - 1; x < i + 1; x++) {
+                            for (int y = j; y < j + 2; y++) {
+                                //System.out.println(x+" "+y);
+                                if (botones[x][y].isEnabled()) {
+
+                                    contar(x, y);
+                                }
+
+                            }
+                        }
+
+                    }
+                }else{
+                    if(i!=7){
+                    if (botones[i][j].getText().equals("0")) {
+                        //System.out.println("Es este");
+                        botones[i][j].setText("");
+                        //System.out.println("Dentro");
+                        for (int x = i - 1; x < i + 2; x++) {
+                            for (int y = j; y < j + 2; y++) {
+                                //System.out.println(x+" "+y);
+                                if (botones[x][y].isEnabled()) {
+
+                                    contar(x, y);
+                                }
+
+                            }
+                        }
+
+                    }
+                }else {
+                        if (botones[i][j].getText().equals("0")) {
+                        //System.out.println("Es este");
+                        botones[i][j].setText("");
+                        //System.out.println("Dentro");
+                        for (int x = i - 1; x < i + 1; x++) {
+                            for (int y = j; y < j + 2; y++) {
+                                //System.out.println(x+" "+y);
+                                if (botones[x][y].isEnabled()) {
+
+                                    contar(x, y);
+                                }
+
+                            }
+                        }
+
+                    }
+                    }
+                }
+                    
+                //} catch (Exception e) {
+
+                //}
+                // }
+            } else if (j == 7) {
+                if (i != 7) {
+                    //System.out.println("Es este");
+                    for (int x = i - 1; x < i + 2; x++) {
+                        for (int y = j - 1; y < j + 1; y++) {
+                            // if (botones[i][j].isEnabled()){ 
+                            //System.out.println(x+" "+y);
+                            if (minas[x][y] == 9) {
+                                sum++;
+                            }
+                            //contar(x, y);
+                            // }
+                        }
+                    }
+                    //if (botones[i][j].isEnabled()) {
+                    botones[i][j].setText(String.valueOf(sum));
+                    botones[i][j].setBackground(Color.WHITE);
+                    botones[i][j].setEnabled(false);
+                } else {
+                    for (int x = i - 1; x < i + 1; x++) {
+                        for (int y = j - 1; y < j + 1; y++) {
+                            // if (botones[i][j].isEnabled()){ 
+                            //System.out.println(x + " " + y);
+                            if (minas[x][y] == 9) {
+                                sum++;
+                            }
+                            //contar(x, y);
+                            // }
+                        }
+                    }
+                    //if (botones[i][j].isEnabled()) {
+                    botones[i][j].setText(String.valueOf(sum));
+                    botones[i][j].setBackground(Color.WHITE);
+                    botones[i][j].setEnabled(false);
+                }
+
+                //try {
+                if(i!=7){
+                    if (botones[i][j].getText().equals("0")) {
+                        //System.out.println("Es este");
+                        botones[i][j].setText("");
+                        //System.out.println("Dentro");
+                        for (int x = i - 1; x < i + 2; x++) {
+                            for (int y = j - 1; y < j + 1; y++) {
+                                //System.out.println(x+" "+y);
+                                if (botones[x][y].isEnabled()) {
+
+                                    contar(x, y);
+                                }
+
+                            }
+                        }
+
+                    }
+            }else{
+                    if (botones[i][j].getText().equals("0")) {
+                        //System.out.println("Es este");
+                        botones[i][j].setText("");
+                        //System.out.println("Dentro");
+                        for (int x = i - 1; x < i + 1; x++) {
+                            for (int y = j - 1; y < j + 1; y++) {
+                                //System.out.println(x+" "+y);
+                                if (botones[x][y].isEnabled()) {
+
+                                    contar(x, y);
+                                }
+
+                            }
+                        }
+
+                    }
+                }
+                /*} catch (Exception e) {
+
+                }*/
+                //}
+            } else if (i == 7) {
+                if (j == 0) {
+                    //System.out.println("Es este");
+                    for (int x = i - 1; x < i + 1; x++) {
+                        for (int y = j; y < j + 1; y++) {
+                            // if (botones[i][j].isEnabled()) {
+                            //System.out.println(x + " " + y);
+                            if (minas[x][y] == 9) {
+                                sum++;
+                            }
+                            //contar(x, y);
+                            //}
+                        }
+                    }
+                    //if (botones[i][j].isEnabled()) {
+                        /*botones[i][j].setText(String.valueOf(sum));
+                     botones[i][j].setBackground(Color.WHITE);
+                     botones[i][j].setEnabled(false);*/
+                    //}
+                } else if (j == 7) {
+                    //System.out.println("Es este");
+                    for (int x = i - 2; x < i + 1; x++) {
+                        for (int y = j - 1; y < j + 1; y++) {
+                            //if (botones[i][j].isEnabled()) {
+                            //System.out.println(x + " " + y);
+                            if (minas[x][y] == 9) {
+                                sum++;
+                            }
+                            //contar(x, y);
+                            //}
+                        }
+                    }
+                    //if (botones[i][j].isEnabled()) {
+                    botones[i][j].setText(String.valueOf(sum));
+                    botones[i][j].setBackground(Color.WHITE);
+                    botones[i][j].setEnabled(false);
+
+                    //}
+                } else {
+                    for (int x = i - 1; x < i + 1; x++) {
+                        for (int y = j - 1; y < j + 2; y++) {
+                            // if (botones[i][j].isEnabled()) {
+                            if (minas[x][y] == 9) {
+                                sum++;
+                            }
+                            //contar(x, y);
+                            // }
+                        }
+                    }
+                    //if (botones[i][j].isEnabled()) {
+                    botones[i][j].setText(String.valueOf(sum));
+                    botones[i][j].setBackground(Color.WHITE);
+                    botones[i][j].setEnabled(false);
+
+                    // }
+                }
+                //try {
+                if(i!=7){
+                    if (botones[i][j].getText().equals("0")) {
+                        botones[i][j].setText("");
+                        //System.out.println("Dentro");
+                        for (int x = i - 1; x < i + 2; x++) {
+                            for (int y = j - 1; y < j + 2; y++) {
+                                //System.out.println(x+" "+y);
+                                if (botones[x][y].isEnabled()) {
+
+                                    contar(x, y);
+                                }
+
+                            }
+                        }
+
+                    }
+                }else{
+                    if (botones[i][j].getText().equals("0")) {
+                        //System.out.println("Es este");
+                        botones[i][j].setText("");
+                        //System.out.println("Dentro");
+                        for (int x = i - 1; x < i + 1; x++) {
+                            for (int y = j - 1; y < j + 1; y++) {
+                                //System.out.println(x+" "+y);
+                                if (botones[x][y].isEnabled()) {
+
+                                    contar(x, y);
+                                }
+
+                            }
+                        }
+
+                    }
+                }
+                /*} catch (Exception e) {
+
+                }*/
+
+            } else {
+
+                for (int x = i - 1; x < i + 2; x++) {
+                    for (int y = j - 1; y < j + 2; y++) {
+                        //contar(x, y);
+                        //System.out.println(x + " " + y);
+                        //if (botones[i][j].isEnabled()) {
+                        if (minas[x][y] == 9) {
+                            sum++;
+                        } //else {
+                        //if (botones[i][j].isEnabled()) {
+                        botones[i][j].setText(String.valueOf(sum));
+                        botones[i][j].setBackground(Color.WHITE);
+                        botones[i][j].setEnabled(false);
+
+                        //contar(x, y);
+                        //}
+                        //}
+                        // }
+                    }
+                    /*botones[i][j].setText(String.valueOf(sum));
+                     //}catch(Exception ex){}
+
+                     botones[i][j].setBackground(Color.WHITE);
+                     botones[i][j].setEnabled(false);*/
+                    //       }
+                    /*botones[i][j].setText(String.valueOf(sum));
+                     //}catch(Exception ex){}
+
+                     botones[i][j].setBackground(Color.WHITE);
+                     botones[i][j].setEnabled(false);*/
+                }
+                //System.out.println(botones[i][j].getText());
+                //try {
+                    if (botones[i][j].getText().equals("0")) {
+                        botones[i][j].setText("");
+                        //System.out.println("Dentro");
+                        for (int x = i - 1; x < i + 2; x++) {
+                            for (int y = j - 1; y < j + 2; y++) {
+                                //System.out.println(x+" "+y);
+                                if (botones[x][y].isEnabled()) {
+
+                                    contar(x, y);
+                                }
+
+                            }
+                        }
+
+                    }
+                /*} catch (Exception e) {
+
+                }*/
+            }
+        }
         }
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //int x, y;
+        int sum = 0;
+        //System.out.println("hola");
+        for (int i = 0; i < botones.length; i++) {
+            for (int j = 0; j < botones[i].length; j++) {
+                if (e.getSource() == botones[i][j]) {
+                    contar(i, j);
+                    //x=i;
+                    //y=j;
+                    //System.out.println(i + " " + j);
+                    /*if (minas[i][j] == 9) {
+                     System.out.println("Bomba");
+                     } else {
+                     //try {
+                     if (i == 0) {
+                     if(j==7){
+                     for (int x = i; x < i + 2; x++) {
+                     for (int y = j - 1; y < j + 1; y++) {
+
+                     if (minas[x][y] == 9) {
+                     sum++;
+                     }
+                     }
+                     }
+                     botones[i][j].setText(String.valueOf(sum));
+                     botones[i][j].setBackground(Color.WHITE);
+                     botones[i][j].setEnabled(false);
+                     }else if(j==0){
+                     for (int x = i; x < i + 2; x++) {
+                     for (int y = j; y < j + 2; y++) {
+
+                     if (minas[x][y] == 9) {
+                     sum++;
+                     }
+                     }
+                     }
+                     botones[i][j].setText(String.valueOf(sum));
+                     botones[i][j].setBackground(Color.WHITE);
+                     botones[i][j].setEnabled(false);
+                     }else{
+                     for (int x = i; x < i + 2; x++) {
+                     for (int y = j - 1; y < j + 2; y++) {
+
+                     if (minas[x][y] == 9) {
+                     sum++;
+                     }
+                     }
+                     }
+                     botones[i][j].setText(String.valueOf(sum));
+                     botones[i][j].setBackground(Color.WHITE);
+                     botones[i][j].setEnabled(false);
+                     }
+                     } else if (j == 0) {
+                     for (int x = i - 1; x < i + 1; x++) {
+                     for (int y = j; y < j + 2; y++) {
+                     //System.out.println(x+" "+y);
+                     if (minas[x][y] == 9) {
+                     sum++;
+                     }
+                     }
+                     }
+                     botones[i][j].setText(String.valueOf(sum));
+                     botones[i][j].setBackground(Color.WHITE);
+                     botones[i][j].setEnabled(false);
+                     } else if (j == 7) {
+                           
+                     for (int x = i - 1; x < i + 1; x++) {
+                     for (int y = j-1; y < j+1; y++) {
+
+                     if (minas[x][y] == 9) {
+                     sum++;
+                     }
+                     }
+                     }
+                     botones[i][j].setText(String.valueOf(sum));
+                     botones[i][j].setBackground(Color.WHITE);
+                     botones[i][j].setEnabled(false);
+                     } else if (i == 7) {
+                     if(j==0){
+                     for (int x = i - 1; x < i + 1; x++) {
+                     for (int y = j; y < j+2; y++) {
+
+                     if (minas[x][y] == 9) {
+                     sum++;
+                     }
+                     }
+                     }
+                     botones[i][j].setText(String.valueOf(sum));
+                     botones[i][j].setBackground(Color.WHITE);
+                     botones[i][j].setEnabled(false);
+                     }else if(j==7){
+                     for (int x = i - 1; x < i + 1; x++) {
+                     for (int y = j-1; y < j+1; y++) {
+
+                     if (minas[x][y] == 9) {
+                     sum++;
+                     }
+                     }
+                     }
+                     botones[i][j].setText(String.valueOf(sum));
+                     botones[i][j].setBackground(Color.WHITE);
+                     botones[i][j].setEnabled(false);
+                     }else{
+                     for (int x = i - 1; x < i + 1; x++) {
+                     for (int y = j-1; y < j+2; y++) {
+
+                     if (minas[x][y] == 9) {
+                     sum++;
+                     }
+                     }
+                     }
+                     botones[i][j].setText(String.valueOf(sum));
+                     botones[i][j].setBackground(Color.WHITE);
+                     botones[i][j].setEnabled(false);
+                     }
+                     } else {
+
+                     for (int x = i - 1; x < i + 2; x++) {
+                     for (int y = j - 1; y < j + 2; y++) {
+
+                     if (minas[x][y] == 9) {
+                     sum++;
+                     }
+                     }
+                     }
+                     botones[i][j].setText(String.valueOf(sum));
+                     //}catch(Exception ex){}
+
+                     botones[i][j].setBackground(Color.WHITE);
+                     botones[i][j].setEnabled(false);
+                     }
+                     }*/
+
+                }
+            }
+        }
+
+    }
 }
 
 class miPanelLateral extends JPanel {

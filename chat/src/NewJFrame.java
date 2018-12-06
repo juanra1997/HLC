@@ -1,21 +1,36 @@
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
-
+import javax.swing.JTextArea;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Juanra
  */
 public class NewJFrame extends javax.swing.JFrame {
+
+    static InetAddress ipDestino = null;
+    static int puerto = 15000;
+    static Scanner sc = new Scanner(System.in);
+    static Socket socket;
+    static PrintWriter salida;
+    static Recibir recibir;
 
     /**
      * Creates new form NewJFrame
@@ -23,10 +38,6 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         setLocationRelativeTo(null);
-        
-        //------------------------------------------
-        //----------------Servidor------------------
-        
     }
 
     /**
@@ -40,13 +51,13 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        area = new javax.swing.JTextArea();
         escribir = new javax.swing.JTextField();
         enviar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        server = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        puertot = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -57,12 +68,12 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel1.setText("Cliente Gráfico");
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setFocusable(false);
-        jScrollPane1.setViewportView(jTextArea1);
+        area.setEditable(false);
+        area.setColumns(20);
+        area.setLineWrap(true);
+        area.setRows(5);
+        area.setFocusable(false);
+        jScrollPane1.setViewportView(area);
 
         escribir.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         escribir.setEnabled(false);
@@ -139,10 +150,10 @@ public class NewJFrame extends javax.swing.JFrame {
                                 .addGap(28, 28, 28)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(puertot, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton1))
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(server, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(enviar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
@@ -163,12 +174,12 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(server, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(puertot, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jButton1)))
                         .addGap(39, 39, 39)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -192,7 +203,20 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Funciona");
+        if (escribir.getText().equals("")) {
+
+        } else {
+            salida.println(escribir.getText());
+            area.setText(area.getText() + "\n[Cliente]>" + escribir.getText());
+
+            if (escribir.getText().equals("exit") || escribir.getText().equals("Exit") || escribir.getText().equals("EXIT")) {
+                color.setBackground(Color.RED);
+                escribir.setEnabled(false);
+                enviar.setEnabled(false);
+                recibir.fin=true;
+            }
+            escribir.setText("");
+        }
     }//GEN-LAST:event_enviarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -201,16 +225,38 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        color.setBackground(Color.GREEN);
-        escribir.setEnabled(true);
-        enviar.setEnabled(true);
+
+        try {
+            ipDestino = InetAddress.getByName(server.getText());
+            try {
+                puerto = Integer.parseInt(puertot.getText());
+                if (puerto > 65000 || puerto < 0) {
+                    throw new NumberFormatException();
+                }
+                try {
+
+                    socket = new Socket(ipDestino, puerto);
+                    salida = new PrintWriter(socket.getOutputStream(), true);
+                    color.setBackground(Color.GREEN);
+                    escribir.setEnabled(true);
+                    enviar.setEnabled(true);
+                    area.setText("Conectado a " + ipDestino + " en el puerto " + puerto);
+                    recibir=new Recibir(area, socket);
+                    recibir.start();
+                } catch (Exception ex) {
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Puerto invalido");
+            }
+        } catch (UnknownHostException ex) {
+            JOptionPane.showMessageDialog(null, "No se ha reconocido el servidor");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void escribirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_escribirKeyTyped
         // TODO add your handling code here:
-        if(evt.getKeyChar()==KeyEvent.VK_ENTER){
-            //JOptionPane.showMessageDialog(null, "Funciona");
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            ;
             enviar.doClick();
         }
     }//GEN-LAST:event_escribirKeyTyped
@@ -244,6 +290,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new NewJFrame().setVisible(true);
             }
@@ -251,6 +298,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea area;
     private javax.swing.JTextField color;
     private javax.swing.JButton enviar;
     private javax.swing.JTextField escribir;
@@ -261,8 +309,42 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField puertot;
+    private javax.swing.JTextField server;
     // End of variables declaration//GEN-END:variables
+}
+
+class Recibir extends Thread {
+
+    boolean fin=false;
+    JTextArea area;
+    Socket socket;
+    BufferedReader entrada;
+    String cadI="";
+
+    public Recibir(JTextArea areae, Socket sockete) {
+
+        area = areae;
+        socket = sockete;
+        
+    }
+
+    @Override
+    public void run() {
+        try {
+            entrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        } catch (IOException ex) {
+            //Logger.getLogger(recibir.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        while (!fin) {
+            try {
+                cadI = entrada.readLine();
+            } catch (IOException ex) {
+                //Logger.getLogger(recibir.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(cadI!=null){
+                area.setText(area.getText()+"\n"+cadI);
+            }
+        }
+    }
 }

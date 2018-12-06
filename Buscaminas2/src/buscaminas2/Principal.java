@@ -15,61 +15,62 @@ import javax.swing.JButton;
  *
  * @author Juanra
  */
-public class Principal implements MouseListener{
-    
-    static Matriz matriz=new Matriz();
+public class Principal implements MouseListener {
+
+    static Matriz matriz = new Matriz();
     static Ventana obj;
     //static JButton[][] botones=obj.panel.botones;
-    
-    public static void main(String[] args){
-        
+
+    public static void main(String[] args) {
+
         matriz.rellenarMatriz();
         matriz.ponerMinas();
-        matriz.pintarMatriz();
+        //matriz.pintarMatriz();
         //matriz.pintarMinas();
-        
+
         //Ventana obj=new Ventana();
         //obj.setVisible(true);
         inicia();
         //Control c=new Control();
-        for(int i=0; i<obj.panel.botones.length; i++){
-            for(int j=0; j<obj.panel.botones[i].length; j++){
-                obj.panel.botones[i][j].addMouseListener(new MouseListener(){
+        /*for(int i=0; i<obj.panel.botones.length; i++){
+         for(int j=0; j<obj.panel.botones[i].length; j++){
+         obj.panel.botones[i][j].addMouseListener(new MouseListener(){
 
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                        System.out.println("hola");
+         @Override
+         public void mouseClicked(MouseEvent e) {
+         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         System.out.println("hola");
                         
-                    }
+         }
 
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    }
+         @Override
+         public void mousePressed(MouseEvent e) {
+         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         }
 
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    }
+         @Override
+         public void mouseReleased(MouseEvent e) {
+         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         }
 
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    }
+         @Override
+         public void mouseEntered(MouseEvent e) {
+         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         }
 
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    }
-                });
-            }
-        }
+         @Override
+         public void mouseExited(MouseEvent e) {
+         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         }
+         });*/
+        //}
+        //}
     }
-    public static void inicia(){
+
+    public static void inicia() {
         //Ventana obj;
         //obj=matriz.obj;
-        obj=new Ventana();
+        obj = new Ventana(matriz.minas);
         obj.setVisible(true);
     }
 

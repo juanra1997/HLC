@@ -55,11 +55,11 @@ public class Matriz /*implements ActionListener*/{
     public void ponerMinas(){
         
         int cont=0;
-        while(cont<5){
+        while(cont<10){//-------------ANTES 5
             for(int i=0; i<minas.length; i++){
                 for(int j=0; j<minas[i].length; j++){
-                    if((int)(Math.random()*5+1)==1){
-                        if(cont<5){
+                    if((int)(Math.random()*10+1)==1){//-------------ANTES 5
+                        if(cont<10){//-------------ANTES 5
                             minas[i][j]=9;
                             cont++;
                         }
