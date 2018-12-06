@@ -37,7 +37,6 @@ public class Ventana extends JFrame {
     miPanel panel;
     miPanelLateral lateral;
     int[][] minas;
-    //JTextField texto;
 
     public Ventana(int[][] minass) {
 
@@ -54,12 +53,9 @@ public class Ventana extends JFrame {
         lateral = new miPanelLateral(panel.botones);
         lateral.setPreferredSize(new Dimension(150, 40));
         add(lateral, BorderLayout.LINE_END);
-        
+
         panel.setCuentaBanderas(lateral.banderas);
-        
-        /*panel = new miPanel(minas, lateral.banderas);
-        panel.setBorder(BorderFactory.createCompoundBorder());
-        add(panel, BorderLayout.CENTER);*/
+        panel.setPanel(lateral);
 
         setSize(600, 400);
         setLocationRelativeTo(null);
@@ -73,20 +69,26 @@ class miPanel extends JPanel implements ActionListener, MouseListener {
     GridLayout gl = new GridLayout(8, 8);
     JButton[][] botones = new JButton[8][8];
     int[][] minas;
-    ImageIcon bandera=new ImageIcon("sintitulo.png");
-    ImageIcon bandera2=new ImageIcon("sintitulo2.png");
-    ImageIcon bomba=new ImageIcon("download.png");
-    ImageIcon pum=new ImageIcon("2187.png");
+    ImageIcon bandera = new ImageIcon("sintitulo.png");
+    ImageIcon bandera2 = new ImageIcon("sintitulo2.png");
+    ImageIcon bomba = new ImageIcon("download.png");
+    ImageIcon pum = new ImageIcon("2187.png");
     JTextField cuentabanderas;
+    miPanelLateral panel;
 
     public miPanel(int[][] minass) {
 
         minas = minass;
         iniciaComponentes();
+
     }
-    
-    public void setCuentaBanderas(JTextField b){
-        cuentabanderas=b;
+
+    public void setCuentaBanderas(JTextField b) {
+        cuentabanderas = b;
+    }
+
+    public void setPanel(miPanelLateral p) {
+        panel = p;
     }
 
     public void iniciaComponentes() {
@@ -125,13 +127,14 @@ class miPanel extends JPanel implements ActionListener, MouseListener {
         int sum = 0;
         if (minas[i][j] == 9) {
             JOptionPane.showMessageDialog(null, "Has perdido");
+            panel.hilo.juego = false;
             for (int x = 0; x < minas.length; x++) {
                 for (int y = 0; y < minas[i].length; y++) {
                     if (minas[x][y] == 9) {
                         //botones[x][y].setText("");
-                        if(botones[i][j]!=botones[x][y]){
+                        if (botones[i][j] != botones[x][y]) {
                             botones[x][y].setIcon(bomba);
-                        }else{
+                        } else {
                             //botones[x][y].setText("");
                             botones[x][y].setIcon(pum);
                         }
@@ -144,6 +147,7 @@ class miPanel extends JPanel implements ActionListener, MouseListener {
             casillas++;
             if (casillas == 54) {
                 JOptionPane.showMessageDialog(null, "Has ganado");
+                panel.hilo.juego = false;
                 contar(i, j);
                 for (int x = 0; x < minas.length; x++) {
                     for (int y = 0; y < minas[i].length; y++) {
@@ -453,7 +457,7 @@ class miPanel extends JPanel implements ActionListener, MouseListener {
         for (int i = 0; i < botones.length; i++) {
             for (int j = 0; j < botones[i].length; j++) {
                 if (e.getSource() == botones[i][j]) {
-                    if(botones[i][j].getIcon()==null){
+                    if (botones[i][j].getIcon() == null) {
                         contar(i, j);
                     }
                 }
@@ -465,30 +469,24 @@ class miPanel extends JPanel implements ActionListener, MouseListener {
     public void mouseClicked(MouseEvent e) {
         for (int i = 0; i < botones.length; i++) {
             for (int j = 0; j < botones[i].length; j++) {
-                if(e.getSource()==botones[i][j]){
-                    if(e.getButton()==MouseEvent.BUTTON3){
-                        //System.out.println("Has presionado el boton "+i+" "+j);
-                        if(botones[i][j].getIcon()==null&&banderas<10){
+                if (e.getSource() == botones[i][j]) {
+                    if (e.getButton() == MouseEvent.BUTTON3) {
+                        if (botones[i][j].getIcon() == null && banderas < 10) {
                             botones[i][j].setIcon(bandera);
                             banderas++;
-                            if(banderas<10){
-                                cuentabanderas.setText("0"+banderas+"/10");
-                            }else{
+                            if (banderas < 10) {
+                                cuentabanderas.setText("0" + banderas + "/10");
+                            } else {
                                 cuentabanderas.setText("10/10");
                             }
-                            //System.out.println(banderas);
-                            //System.out.println(botones[i][j].getIcon());
-                        }
-                        else if(botones[i][j].getIcon()==bandera||(banderas==10&&botones[i][j].getIcon()!=bandera2)){
-                            if(botones[i][j].getIcon()==bandera){
-                                
+                        } else if (botones[i][j].getIcon() == bandera || (banderas == 10 && botones[i][j].getIcon() != bandera2)) {
+                            if (botones[i][j].getIcon() == bandera) {
+
                                 banderas--;
-                                cuentabanderas.setText("0"+banderas+"/10");
+                                cuentabanderas.setText("0" + banderas + "/10");
                             }
                             botones[i][j].setIcon(bandera2);
-                            //System.out.println(banderas);
-                            //System.out.println(botones[i][j].getIcon());
-                        }else if(botones[i][j].getIcon()==bandera2){
+                        } else if (botones[i][j].getIcon() == bandera2) {
                             botones[i][j].setIcon(null);
                         }
                     }
@@ -499,22 +497,22 @@ class miPanel extends JPanel implements ActionListener, MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-    
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-    
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-    
+
     }
 }
 
@@ -523,6 +521,8 @@ class miPanelLateral extends JPanel implements ActionListener {
     JButton iniciar, pausar, salir;
     JTextField banderas, tiempo;
     JButton[][] botones;
+    Hilo hilo;
+    boolean primero = false;
 
     public miPanelLateral(JButton[][] b) {
 
@@ -611,26 +611,44 @@ class miPanelLateral extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == iniciar) {
-            for (int i = 0; i < botones.length; i++) {
-                for (int j = 0; j < botones[i].length; j++) {
-                    botones[i][j].setBackground(Color.CYAN);
-                    botones[i][j].setEnabled(true);
+            if (!primero) {
+                hilo = new Hilo(tiempo);
+                hilo.start();
+                primero = true;
+                for (int i = 0; i < botones.length; i++) {
+                    for (int j = 0; j < botones[i].length; j++) {
+                        botones[i][j].setBackground(Color.CYAN);
+                        botones[i][j].setEnabled(true);
+                    }
+                }
+            } else {
+                hilo.esperar = false;
+                for (int i = 0; i < botones.length; i++) {
+                    for (int j = 0; j < botones[i].length; j++) {
+                        if (botones[i][j].getBackground() == Color.BLACK) {
+
+                            botones[i][j].setBackground(Color.CYAN);
+                            botones[i][j].setEnabled(true);
+                        }
+                    }
                 }
             }
             iniciar.setEnabled(false);
             pausar.setEnabled(true);
         }
-
         if (e.getSource() == pausar) {
             for (int i = 0; i < botones.length; i++) {
                 for (int j = 0; j < botones[i].length; j++) {
-                    botones[i][j].setBackground(Color.WHITE);
-                    botones[i][j].setEnabled(false);
+                    if (botones[i][j].getBackground() == Color.CYAN) {
+                        botones[i][j].setBackground(Color.BLACK);
+                        botones[i][j].setEnabled(false);
+                    }
+
                 }
             }
             iniciar.setEnabled(true);
             pausar.setEnabled(false);
+            hilo.esperar = true;
         }
     }
-
 }
