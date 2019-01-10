@@ -3,18 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package miminitenis;
-
-import java.awt.Canvas;
+package pingpong;
 
 /**
  *
  * @author Juanra
  */
-public class PanelJuego extends Canvas{
+public class Principal {
     
-    public PanelJuego(){
-        
+    public static void main(String[] args){
+        Ventana obj=new Ventana();
+        obj.setVisible(true);
     }
-    
 }

@@ -37,6 +37,7 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         initComponents();
+        setResizable(false);
         setLocationRelativeTo(null);
     }
 
@@ -63,10 +64,10 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         color = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel1.setText("Cliente Gráfico");
+        jLabel1.setText("Cliente Grafico");
 
         area.setEditable(false);
         area.setColumns(20);
@@ -120,8 +121,13 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel4.setText("Conectado:");
 
         color.setEditable(false);
-        color.setBackground(new java.awt.Color(255, 51, 51));
+        color.setBackground(Color.RED);
         color.setFocusable(false);
+        color.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                colorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -221,6 +227,13 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        if(color.getBackground()!=Color.RED){
+            salida.println("exit");
+            color.setBackground(Color.RED);
+            escribir.setEnabled(false);
+            enviar.setEnabled(false);
+            recibir.fin=true;
+        }
         System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -244,6 +257,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     recibir=new Recibir(area, socket);
                     recibir.start();
                 } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "No se ha podido conectar al servidor");
                 }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Puerto invalido");
@@ -260,6 +274,10 @@ public class NewJFrame extends javax.swing.JFrame {
             enviar.doClick();
         }
     }//GEN-LAST:event_escribirKeyTyped
+
+    private void colorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_colorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -344,6 +362,7 @@ class Recibir extends Thread {
             }
             if(cadI!=null){
                 area.setText(area.getText()+"\n"+cadI);
+                area.setCaretPosition(area.getDocument().getLength());
             }
         }
     }

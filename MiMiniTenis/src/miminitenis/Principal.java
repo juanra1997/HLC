@@ -17,6 +17,5 @@ public class Principal {
         Ventana obj=new Ventana();
         obj.setLocationRelativeTo(null);
         obj.setVisible(true);
-        (new Thread(obj)).start();
     }
 }

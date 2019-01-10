@@ -39,14 +39,14 @@ public class Bola {
         
         if(/*x==265*/x==miJuego.getWidth()-30){
             dx=-1;
-            //Sonidos.SOUNDPELOTA.play();
+            Sonidos.SOUNDPELOTA.play();
         }
         if(/*y==337*/y==miJuego.getHeight()-30){    
             dy=-1;
-            //Sonidos.SOUNDPELOTA.play();
+            Sonidos.SOUNDPELOTA.play();
         }
         if(y==miJuego.getHeight()-30){
-            //Sonidos.SOUNDGAMEOVER.play();
+            Sonidos.SOUNDGAMEOVER.play();
             gameOver();
             
         }        
@@ -61,7 +61,7 @@ public class Bola {
         
         if(miJuego.raqueta.devolverRaqueta().intersects(this.devolverPelota())){
             dy=-1;
-            //Sonidos.SOUNDPELOTA.play();
+            Sonidos.SOUNDPELOTA.play();
         }
     }
     

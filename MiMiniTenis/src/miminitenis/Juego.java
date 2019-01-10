@@ -17,11 +17,14 @@ import java.awt.event.KeyListener;
  */
 public class Juego extends Canvas/* implements KeyListener*/{
     
-    Bola miBola=new Bola(this/*, this.getWidth()-30, this.getHeight()-30*/);
+    Bola miBola;
     Raqueta raqueta=new Raqueta(this);
     Raquetas raquetas=new Raquetas(this);
     
-    public Juego(){
+    
+    public Juego(Panel p, Ventana v){
+        
+        miBola=new Bola(this, p, v);
         
         this.addKeyListener(new KeyListener(){
 
@@ -65,28 +68,11 @@ public class Juego extends Canvas/* implements KeyListener*/{
 
     @Override
     public void paint(Graphics g){
-        //public final void addSuppressed(StackOverflowError);
+
         update(g);
     }
     
     public Bola getMiBola() {
         return miBola;
     }
-
-    /*@Override
-    public void keyTyped(KeyEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        raqueta.keyPressed(e);
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        raqueta.keyReleased(e);
-    }*/
 }
