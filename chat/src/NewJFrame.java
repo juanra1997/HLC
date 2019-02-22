@@ -270,7 +270,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private void escribirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_escribirKeyTyped
         // TODO add your handling code here:
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            ;
+            //;
             enviar.doClick();
         }
     }//GEN-LAST:event_escribirKeyTyped

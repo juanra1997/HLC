@@ -15,4 +15,5 @@ public class Principal {
         Ventana obj=new Ventana();
         obj.setVisible(true);
     }
+    
 }
